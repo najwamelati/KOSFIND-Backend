@@ -1,0 +1,86 @@
+// Buka https://dbdiagram.io lalu pilih New Diagram dan paste kode DBML ini.
+
+Table users {
+  id int [pk, increment]
+  nama varchar(100) [not null]
+  email varchar(150) [not null, unique]
+  password_hash text [not null]
+  role varchar(20) [not null]
+  created_at timestamp
+}
+
+Table profiles {
+  id int [pk, increment]
+  user_id int [not null, unique]
+  nomor_telepon varchar(25)
+  alamat text
+  foto_profil text
+}
+
+Table kos {
+  id int [pk, increment]
+  pemilik_id int [not null]
+  nama_kos varchar(150) [not null]
+  alamat text [not null]
+  kota varchar(100) [not null]
+  deskripsi text
+  jenis_kos varchar(30) [not null]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table kamar {
+  id int [pk, increment]
+  kos_id int [not null]
+  nomor_kamar varchar(30) [not null]
+  harga_per_bulan decimal(12,2) [not null]
+  status varchar(20) [not null]
+  luas_kamar varchar(30)
+}
+
+Table fasilitas {
+  id int [pk, increment]
+  nama_fasilitas varchar(100) [not null, unique]
+}
+
+Table kos_fasilitas {
+  kos_id int [not null]
+  fasilitas_id int [not null]
+
+  indexes {
+    (kos_id, fasilitas_id) [pk]
+  }
+}
+
+Table pemesanan {
+  id int [pk, increment]
+  kamar_id int [not null]
+  penyewa_id int [not null]
+  tanggal_mulai date [not null]
+  tanggal_selesai date
+  status varchar(20) [not null]
+  created_at timestamp
+}
+
+Table ulasan {
+  id int [pk, increment]
+  kos_id int [not null]
+  penyewa_id int [not null]
+  rating int [not null]
+  komentar text
+  created_at timestamp
+
+  indexes {
+    (kos_id, penyewa_id) [unique]
+  }
+}
+
+Ref: profiles.user_id - users.id
+Ref: kos.pemilik_id > users.id
+Ref: kamar.kos_id > kos.id
+Ref: kos_fasilitas.kos_id > kos.id
+Ref: kos_fasilitas.fasilitas_id > fasilitas.id
+Ref: pemesanan.kamar_id > kamar.id
+Ref: pemesanan.penyewa_id > users.id
+Ref: ulasan.kos_id > kos.id
+Ref: ulasan.penyewa_id > users.id

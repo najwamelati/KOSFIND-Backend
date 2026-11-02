@@ -1,0 +1,51 @@
+{
+  "info": {
+    "name": "KOSFIND REST API",
+    "description": "Koleksi pengujian lima endpoint CRUD tabel kos. Jalankan server lokal terlebih dahulu.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:3000" },
+    { "key": "kos_id", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "POST - Tambah kos",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"pemilik_id\": 1,\n  \"nama_kos\": \"Kos Anggrek\",\n  \"alamat\": \"Jl. Contoh No. 20\",\n  \"kota\": \"Surabaya\",\n  \"deskripsi\": \"Kos nyaman dekat kampus\",\n  \"jenis_kos\": \"putri\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": "{{base_url}}/api/kos"
+      }
+    },
+    {
+      "name": "GET - Semua kos",
+      "request": { "method": "GET", "url": "{{base_url}}/api/kos" }
+    },
+    {
+      "name": "GET - Kos berdasarkan ID",
+      "request": { "method": "GET", "url": "{{base_url}}/api/kos/{{kos_id}}" }
+    },
+    {
+      "name": "PUT - Perbarui kos",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"pemilik_id\": 1,\n  \"nama_kos\": \"Kos Melati Update\",\n  \"alamat\": \"Jl. Contoh No. 11\",\n  \"kota\": \"Surabaya\",\n  \"deskripsi\": \"Deskripsi kos yang sudah diperbarui\",\n  \"jenis_kos\": \"campur\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": "{{base_url}}/api/kos/{{kos_id}}"
+      }
+    },
+    {
+      "name": "DELETE - Hapus kos",
+      "request": { "method": "DELETE", "url": "{{base_url}}/api/kos/{{kos_id}}" }
+    }
+  ]
+}
